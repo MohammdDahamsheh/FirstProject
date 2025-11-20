@@ -8,8 +8,9 @@ namespace FirstProject.DAO
 {
     public interface IVecationRequest
     {
-        void addVacationRequest(string description, string employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays, int requestStateId);
+        void addVacationRequest(string description, string employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays);
         void approveVacationRequest(int requestId, string approvedByEmployeeNumber);
         void declineVacationRequest(int requestId, string declinedByEmployeeNumber);
+        void getAllEmployeesPinding();
     }
 }

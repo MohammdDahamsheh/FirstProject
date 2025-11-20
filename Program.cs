@@ -1,4 +1,5 @@
 ﻿using FirstProject.Entity;
+using FirstProject.Responses;
 using FirstProject.Service;
 namespace FirstProject
 {
@@ -17,12 +18,16 @@ namespace FirstProject
             //employeeService.add_10_employees();
             //employeeService.updateEmployee("E001", "aliceUpdated", 1, 1, 60000);
             //employeeService.updateVacationDaysLeft("E001", 15);
-            //vacationRequestService.addVacationRequest("I need a vacation","E001",'B',new DateOnly(2025,11,29),new DateOnly(2025,12,3),5,1);
+
+            //vacationRequestService.addVacationRequest("I need a vacation", "E004", 'A',new DateOnly(2025,11,29),new DateOnly(2025,12,3),5);
             //vacationRequestService.approveVacationRequest(1,"E002");
+            //vacationRequestService.declineVacationRequest(1,"E003");
 
-            vacationRequestService.declineVacationRequest(1,"E003");
+            //employeeService.getAll();
+            //EmployeeResponse response = employeeService.GetEmployeeByEmployeeNumber("E001");
+            //Console.WriteLine(response);
 
-
+            //vacationRequestService.getAllEmployeesPinding();
         }
     }
 }

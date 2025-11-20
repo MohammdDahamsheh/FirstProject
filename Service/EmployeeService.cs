@@ -1,5 +1,7 @@
 ﻿using FirstProject.DAO;
 using FirstProject.Entity;
+using FirstProject.Responses;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,9 @@ namespace FirstProject.Service
     public class EmployeeService : IEmployeeCRUD
     {
         public EmployeeMAnegmentSystemContext db { get; set; }
-        public EmployeeService(EmployeeMAnegmentSystemContext db) { 
-           this.db = db;
+        public EmployeeService(EmployeeMAnegmentSystemContext db)
+        {
+            this.db = db;
 
         }
         public void add_10_employees()
@@ -129,6 +132,66 @@ namespace FirstProject.Service
                 db.SaveChanges();
             }
 
+        }
+
+        public void getAll()
+        {
+            var employees = (from emp in db.Employees
+                             join dep in db.Departments
+                             on emp.DepartmentId equals dep.DepartmentId
+                             select new { emp.Salary,emp.EmployeeNumber,emp.EmployeeName, dep.DepartmentName }
+                             );
+
+            foreach (var emp in employees)
+            {
+                Console.WriteLine(
+                    $"Employee Number: {emp.EmployeeNumber}" +
+                    $", Name: {emp.EmployeeName}" +
+                    $", Department: {emp.DepartmentName}" +
+                    $", Salary: {emp.Salary}"
+                    );
+            }
+
+        }
+
+        public EmployeeResponse GetEmployeeByEmployeeNumber(string employeeNumber)
+        {
+            var employee = (from emp in db.Employees
+                            join dep in db.Departments
+                            on  emp.DepartmentId equals dep.DepartmentId
+                            join pos in db.Positions
+                            on  emp.PositionId equals pos.PositionId
+                             where emp.EmployeeNumber==employeeNumber
+                             select new
+                             {
+                                 emp.EmployeeNumber,
+                                 emp.EmployeeName,
+                                 dep.DepartmentName,
+                                 pos.PositionName,
+                                 emp.ReportedToEmployeeNumber,
+                                 emp.VacationDaysLeft
+                             }
+                            ).FirstOrDefault();
+            //var DepName = (from d in db.Departments
+            //               where employee.DepartmentId == d.DepartmentId
+            //               select d.DepartmentName
+            //                ).FirstOrDefault();
+                           
+            //var PosName = (from p in db.Positions
+            //               where employee.PositionId == p.PositionId
+            //               select p.PositionName
+            //                ).FirstOrDefault();
+
+            EmployeeResponse employeeResponse = new EmployeeResponse(
+                employee.EmployeeNumber,
+                employee.EmployeeName,
+                employee.DepartmentName,
+                employee.PositionName,
+                employee.ReportedToEmployeeNumber,
+                employee.VacationDaysLeft
+                );
+
+            return employeeResponse;
         }
     }
 }

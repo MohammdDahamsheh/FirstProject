@@ -14,16 +14,11 @@ namespace FirstProject.Service
         public EmployeeMAnegmentSystemContext db { get; set; }
         public EmployeeService employeeService { get; set; }
         public VecationRequestService(EmployeeMAnegmentSystemContext db, EmployeeService employeeService) { this.db = db; this.employeeService = employeeService; }
-        public void addVacationRequest(string description, string employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays, int requestStateId)
+        public void addVacationRequest(string description, string employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays)
         {
-            var vac = db.VacationRequests.Where(e => e.EmployeeNumber == employeeNumber).Include(v=>v.RequestState).FirstOrDefault();
-            VacationRequest vacationRequest = new VacationRequest(DateTime.Now, description, employeeNumber, vacationTypeCode, startDate, endDate, totalVacationDays, requestStateId);
+            var vac = db.VacationRequests.Where(e => e.EmployeeNumber == employeeNumber).FirstOrDefault();
+            VacationRequest vacationRequest = new VacationRequest(DateTime.Now, description, employeeNumber, vacationTypeCode, startDate, endDate, totalVacationDays, 1);
 
-            if (vac != null&&vac.RequestState.StateName== "Submitted")
-            {
-               throw new Exception("There is already a submitted vacation request for this employee.....");
-            }
-            
             db.VacationRequests.Add(vacationRequest);
             db.SaveChanges();
 
@@ -62,6 +57,30 @@ namespace FirstProject.Service
                 request.RequestStateId = 3; // Decline
                 request.DeclinedByEmployeeNumber = declinedByEmployeeNumber;
                 db.SaveChanges();
+
+            }
+        }
+
+        public void getAllEmployeesPinding()
+        {
+            var vacations = (from v in db.VacationRequests
+                             join e in db.Employees 
+                             on v.EmployeeNumber equals e.EmployeeNumber
+                             where v.RequestStateId == 1
+                             select new { 
+                             e.EmployeeNumber,
+                             e.EmployeeName,
+                             e.department.DepartmentName,
+                             e.position.PositionName
+                             }
+                             ).Distinct();
+            foreach (var vac in vacations) {
+                Console.WriteLine(
+                    $"Employee Number: {vac.EmployeeNumber}" +
+                    $", Employee Name: {vac.EmployeeName}" +
+                    $", Department Name: {vac.DepartmentName}" +
+                    $", Position Name: {vac.PositionName}"
+                    );
 
             }
         }

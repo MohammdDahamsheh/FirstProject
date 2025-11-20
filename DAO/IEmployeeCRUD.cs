@@ -1,4 +1,5 @@
 ﻿using FirstProject.Entity;
+using FirstProject.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,10 @@ namespace FirstProject.DAO
         void add_10_employees();
         void updateEmployee(string employeeNumber, string name,int deptId,int posId,int salary);
         void updateVacationDaysLeft(string employeeNumber, int daysLeft);
+
+        void getAll();
+
+        EmployeeResponse GetEmployeeByEmployeeNumber(string employeeNumber);
+
     }
 }
