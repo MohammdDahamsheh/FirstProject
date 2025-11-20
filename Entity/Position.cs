@@ -14,6 +14,7 @@ namespace FirstProject.Entity
         [Required]
         [MaxLength(50)]
         public string PositionName { get; set; }
+        public List<Employee> Employees { get; set; }
         public Position(string positionName)
         {
             PositionName = positionName;

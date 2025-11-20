@@ -13,5 +13,13 @@ namespace FirstProject.Entity
         public char VacationTypeCode { get; set; }
         [MaxLength(20)]
         public string VacationTypeName { get; set; }
+
+        public List<VacationRequest> VacationRequests { get; set; }
+
+        public VacationType(char vacationTypeCode, string vacationTypeName)
+        {
+            VacationTypeCode = vacationTypeCode;
+            VacationTypeName = vacationTypeName;
+        }
     }
 }

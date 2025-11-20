@@ -17,7 +17,7 @@ namespace FirstProject.Entity
         [MaxLength(100)]
         public string Description { get; set; }
 
-        public int EmployeeNumber { get; set; }
+        public string EmployeeNumber { get; set; }
 
         public char VacationTypeCode { get; set; }
         [Required]
@@ -34,7 +34,11 @@ namespace FirstProject.Entity
         public string ?ApprovedByEmployeeNumber { get; set; }
         public string ?DeclinedByEmployeeNumber{ get; set; }
 
-        public VacationRequest(DateTime requestSubmissionDate, string description, int employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays, int requestStateId)
+        public Employee Employee { get; set; }
+        public VacationType VacationType { get; set; }
+        public RequestState RequestState { get; set; }
+
+        public VacationRequest(DateTime requestSubmissionDate, string description, string employeeNumber, char vacationTypeCode, DateOnly startDate, DateOnly endDate, int totalVacationDays, int requestStateId)
         {
             RequestSubmissionDate = requestSubmissionDate;
             Description = description;
