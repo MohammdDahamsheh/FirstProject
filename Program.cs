@@ -28,6 +28,10 @@ namespace FirstProject
             //Console.WriteLine(response);
 
             //vacationRequestService.getAllEmployeesPinding();
+            //vacationRequestService.getAllHistoryApproved("E001");
+            //vacationRequestService.getAllPindingRequests();
+
+
         }
     }
 }

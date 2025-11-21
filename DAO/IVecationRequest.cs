@@ -12,5 +12,7 @@ namespace FirstProject.DAO
         void approveVacationRequest(int requestId, string approvedByEmployeeNumber);
         void declineVacationRequest(int requestId, string declinedByEmployeeNumber);
         void getAllEmployeesPinding();
+        void getAllHistoryApproved(string employeeNum);
+        void getAllPindingRequests();
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using FirstProject.DAO;
 using FirstProject.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FirstProject.Service
 {
+
     public class VecationRequestService : IVecationRequest
     {
         public EmployeeMAnegmentSystemContext db { get; set; }
@@ -64,17 +66,19 @@ namespace FirstProject.Service
         public void getAllEmployeesPinding()
         {
             var vacations = (from v in db.VacationRequests
-                             join e in db.Employees 
+                             join e in db.Employees
                              on v.EmployeeNumber equals e.EmployeeNumber
                              where v.RequestStateId == 1
-                             select new { 
-                             e.EmployeeNumber,
-                             e.EmployeeName,
-                             e.department.DepartmentName,
-                             e.position.PositionName
+                             select new
+                             {
+                                 e.EmployeeNumber,
+                                 e.EmployeeName,
+                                 e.department.DepartmentName,
+                                 e.position.PositionName
                              }
                              ).Distinct();
-            foreach (var vac in vacations) {
+            foreach (var vac in vacations)
+            {
                 Console.WriteLine(
                     $"Employee Number: {vac.EmployeeNumber}" +
                     $", Employee Name: {vac.EmployeeName}" +
@@ -83,6 +87,69 @@ namespace FirstProject.Service
                     );
 
             }
+        }
+
+        public void getAllHistoryApproved(string employeeNum)
+        {
+            var vacations = db.VacationRequests.Include(v => v.VacationType).Where(v => v.RequestStateId == 2 && v.EmployeeNumber == employeeNum).ToList();
+            if (vacations.IsNullOrEmpty()) Console.WriteLine("No vacathins request is found ....");
+            else
+                foreach (var vac in vacations)
+                {
+                    Console.WriteLine(
+                        $", Vacation Type: {vac.VacationType.VacationTypeName}" +
+                        $", Description: {vac.Description}" +
+                        $", Start Date: {vac.StartDate}" +
+                        $", End Date: {vac.EndDate}" +
+                        $", Total Vacation Days: {vac.TotalVacationDays}" +
+                        $", Approved by: {vac.ApprovedByEmployeeNumber}"
+                        );
+                }
+            Console.WriteLine("-----------------------------------------------------");
+        }
+
+        public void getAllPindingRequests()
+        {
+            var vacations = (from vac in db.VacationRequests
+                             join emp in db.Employees
+                             on vac.EmployeeNumber equals emp.EmployeeNumber
+                             where vac.RequestStateId == 1
+                             select new
+                             {
+                                 vac.Description,
+                                 vac.EmployeeNumber,
+                                 emp.EmployeeName,
+                                 vac.RequestSubmissionDate,
+                                 vac.TotalVacationDays,
+                                 vac.StartDate,
+                                 vac.EndDate,
+                                 emp.Salary
+                             }
+
+
+                             );
+            if (vacations.IsNullOrEmpty()) Console.WriteLine("NO pinding requests is found .....");
+            else
+            {
+                foreach (var vac in vacations)
+                {
+                    Console.WriteLine(
+                        $"Description: {vac.Description}" +
+                        $"Employee Number:{vac.EmployeeNumber}" +
+                        $", Employee Name: {vac.EmployeeName}" +
+                        $", Request Submission Date: {vac.RequestSubmissionDate}" +
+                        $", Total Vacation Days: {vac.TotalVacationDays}" +
+                        $", Start Date: {vac.StartDate}" +
+                        $", End Date: {vac.EndDate}" +
+                        $", Salary: {vac.Salary}\n"
+                        );
+                    Console.WriteLine("-----------------------------------------------------");
+                }
+
+
+
+            }
+
         }
     }
 }
