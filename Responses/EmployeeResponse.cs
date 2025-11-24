@@ -25,6 +25,10 @@ namespace FirstProject.Responses
             TotalVacationDaysLeft = totalVacationDaysLeft;
         }
 
+        public EmployeeResponse()
+        {
+        }
+
         public override string? ToString()
         {
             return "Employee Number: " + EmployeeNumber + 

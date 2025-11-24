@@ -162,14 +162,14 @@ namespace FirstProject.Service
                             join pos in db.Positions
                             on  emp.PositionId equals pos.PositionId
                              where emp.EmployeeNumber==employeeNumber
-                             select new
+                             select new EmployeeResponse
                              {
-                                 emp.EmployeeNumber,
-                                 emp.EmployeeName,
-                                 dep.DepartmentName,
-                                 pos.PositionName,
-                                 emp.ReportedToEmployeeNumber,
-                                 emp.VacationDaysLeft
+                               EmployeeNumber=  emp.EmployeeNumber,
+                                  EmployeeName=emp.EmployeeName,
+                                 DepartmentName = dep.DepartmentName,
+                                 PositionName = pos.PositionName,
+                                  ReportingToEmployeeName=emp.ReportedToEmployeeNumber,
+                                 TotalVacationDaysLeft=emp.VacationDaysLeft
                              }
                             ).FirstOrDefault();
             //var DepName = (from d in db.Departments
@@ -182,16 +182,17 @@ namespace FirstProject.Service
             //               select p.PositionName
             //                ).FirstOrDefault();
 
-            EmployeeResponse employeeResponse = new EmployeeResponse(
-                employee.EmployeeNumber,
-                employee.EmployeeName,
-                employee.DepartmentName,
-                employee.PositionName,
-                employee.ReportedToEmployeeNumber,
-                employee.VacationDaysLeft
-                );
+            //EmployeeResponse employeeResponse = new EmployeeResponse(
+            //    employee.EmployeeNumber,
+            //    employee.EmployeeName,
+            //    employee.DepartmentName,
+            //    employee.PositionName,
+            //    employee.ReportedToEmployeeNumber,
+            //    employee.VacationDaysLeft
+            //    );
 
-            return employeeResponse;
+
+            return employee;
         }
     }
 }

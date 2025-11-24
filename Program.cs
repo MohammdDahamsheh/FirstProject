@@ -24,8 +24,8 @@ namespace FirstProject
             //vacationRequestService.declineVacationRequest(1,"E003");
 
             //employeeService.getAll();
-            //EmployeeResponse response = employeeService.GetEmployeeByEmployeeNumber("E001");
-            //Console.WriteLine(response);
+            EmployeeResponse response = employeeService.GetEmployeeByEmployeeNumber("E001");
+            Console.WriteLine(response);
 
             //vacationRequestService.getAllEmployeesPinding();
             //vacationRequestService.getAllHistoryApproved("E001");
