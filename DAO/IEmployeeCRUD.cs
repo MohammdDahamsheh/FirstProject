@@ -13,9 +13,12 @@ namespace FirstProject.DAO
         void add_20_departments();
         void add_20_positions();
         void add_10_employees();
-        void updateEmployee(string employeeNumber, string name,int deptId,int posId,int salary);
+        void updateEmployee(string employeeNumber, string name, int deptId, int posId, int salary);
         void updateVacationDaysLeft(string employeeNumber, int daysLeft);
 
+        void addEmployee(Employee employee);
+        void addDepartment(Department department);
+        void addPosition(Position position);
         void getAll();
 
         EmployeeResponse GetEmployeeByEmployeeNumber(string employeeNumber);

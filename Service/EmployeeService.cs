@@ -32,7 +32,20 @@ namespace FirstProject.Service
             db.Employees.AddRange(employees);
             db.SaveChanges();
         }
-
+        public void addEmployee(Employee employee) { 
+            db.Employees.Add(employee);
+            db.SaveChanges();
+        }
+        public void addDepartment(Department department)
+        {
+            db.Departments.Add(department);
+            db.SaveChanges();
+        }
+        public void addPosition(Position position)
+        {
+            db.Positions.Add(position);
+            db.SaveChanges();
+        }
         public void add_20_departments()
         {
             string[] departments = new string[20]
@@ -103,6 +116,8 @@ namespace FirstProject.Service
             db.SaveChanges();
 
         }
+
+
 
         public void updateEmployee(string employeeNumber, string name, int deptId, int posId, int salary)
         {
